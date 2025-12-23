@@ -40,4 +40,4 @@
         ],
     },
     'license': 'AGPL-3'
-}
+} # pyright: ignore[reportUnusedExpression]

@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "checkJs": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "esnext",
+    "lib": ["esnext", "dom"],
+    "strict": false,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "baseUrl": ".",
+    "paths": {
+      "@odoo/owl": ["/home/ikec/Documents/Code/odoo-spiel/odoo/addons/web/static/lib/owl/owl.js"]
+    }
+  },
+  "include": [
+    "static/**/*"
+  ]
+}
