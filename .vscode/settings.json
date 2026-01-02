@@ -1,0 +1,9 @@
+{
+    "xml.symbols.enabled": false,
+    "python.analysis.extraPaths": [
+        "/home/odoo/odoo/repositories/odoo/odoo"
+    ],
+    "python.autoComplete.extraPaths": [
+        "/home/odoo/odoo/repositories/odoo/odoo"
+    ]
+}
