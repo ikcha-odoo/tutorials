@@ -1,9 +1,20 @@
 {
     "xml.symbols.enabled": false,
+    "python.defaultInterpreterPath": "/home/ikec/.config/odev/venv/bin/python3",
     "python.analysis.extraPaths": [
-        "/home/odoo/odoo/repositories/odoo/odoo"
+        "/home/ikec/odoo/repositories/odoo/odoo"
     ],
     "python.autoComplete.extraPaths": [
-        "/home/odoo/odoo/repositories/odoo/odoo"
+        "/home/ikec/odoo/repositories/odoo/odoo"
+    ],
+    "python-envs.defaultEnvManager": "ms-python.python:system",
+    "python-envs.pythonProjects": [],
+    "python.analysis.indexing": true,
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.packageIndexDepths": [
+        {
+            "name": "odoo",
+            "depth": 10
+        }
     ]
 }

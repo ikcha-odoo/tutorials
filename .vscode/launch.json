@@ -1,0 +1,38 @@
+{
+  "configurations": [
+    {
+      "name": "Restart Estate",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "/home/ikec/.local/share/odev/main.py",
+      "python": "/home/ikec/.config/odev/venv/bin/python3",
+      "args": [
+        "run",
+        "mydatabase",
+        "-i",
+        "estate",
+        "--dev",
+        "all",
+        "--limit-time-real=10000"
+      ],
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Odev Debug",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "/home/ikec/.local/share/odev/main.py",
+      "python": "/home/ikec/.config/odev/venv/bin/python3",
+      "args": [
+        "run",
+        "mydatabase",
+        "-u",
+        "estate",
+        "--dev",
+        "all",
+        "--limit-time-real=10000"
+      ],
+      "console": "integratedTerminal"
+    }
+  ]
+}
