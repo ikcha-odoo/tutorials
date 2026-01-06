@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate="1">
+
+
+        <record id="estate_property_action" model="ir.actions.act_window">
+            <field name="name">Properties</field>
+            <field name="res_model">estate.property</field>
+            <field name="view_mode">kanban,list,form</field>
+            <field name="search_view_id" ref="estate_property_search_view"/>
+            <field name="context">{ 'search_default_available': 1}</field>
+        </record>
+        <menuitem id="estate_property_menu1" name="Properties" action="estate_property_action" parent="menu_main"/>
+
+    </data>
+
+
+</odoo>

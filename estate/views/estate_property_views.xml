@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="estate_property_list_view" model="ir.ui.view">
+            <field name="name">estate.property.view.list</field>
+            <field name="model">estate.property</field>
+            <field name="arch" type="xml">
+                <list decoration-success="state in ('offer received', 'accepted')" decoration-bf="state == 'accepted'">
+                    <field name="name" width="200px"/>
+                    <field name="prop_type" string="Property Type" width="150px"/>
+                    <field name="postcode" width="100px"/>
+                    <field name="tags_ids" string="Tags" widget="many2many_tags" width="200px"/>
+                    <field name="bedrooms" width="80px"/>
+                    <field name="living_area" width="100px"/>
+                    <field name="expected_price" width="120px"/>
+                    <field name="selling_price" width="120px"/>
+                    <field name="date_availability" optional="hide"/>
+                    <field name="state" column_invisible="1"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="estate_property_form_view" model="ir.ui.view">
+            <field name="name">estate.property.view.form</field>
+            <field name="model">estate.property</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="SoldFunction" type="object" string="Sold" invisible="state=='sold'"/>
+                        <button name="CancelFunction" type="object" string="Cancel"/>
+                        <!-- <field name="state" widget="statusbar"/> -->
+                        <field name="state"/>
+                    </header>
+                    <sheet>
+                        <h1>
+                            <field name="name" />
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="tags_ids" string="" widget="many2many_tags" options="{'no_create': True, 'color_field': 'color', 'on_tag_click': 'edit_color'}"/>
+                                <field name="prop_type"/>
+                                <field name="postcode" />
+                                <field name="date_availability" />
+                            </group>
+                            <group>
+                                <field name="expected_price" />
+                                <field name="selling_price" />
+                                <field name="best_price"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Description">
+                                <group>
+                                    <field name="description" />
+                                    <field name="bedrooms" />
+                                    <field name="living_area" />
+                                    <field name="facades" />
+                                    <field name="garage" />
+                                    <field name="garden" />
+                                    <field name="garden_area" invisible="not garden" />
+                                    <field name="garden_orientation" invisible="not garden" />
+                                    <field name="total_area" />
+                                </group>
+                            </page>
+                            <page string="Offers">
+                                <field name="estate_offers" widget="one2many" readonly="state=='sold'"/>
+                            </page>
+                            <page string="Info">
+                                <group>
+                                    <field name="salesman_id"/>
+                                    <field name="buyer_id"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="estate_property_search_view" model="ir.ui.view">
+            <field name="name">estate.property.search</field>
+            <field name="model">estate.property</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" />
+                    <field name="postcode" />
+                    <field name="expected_price" />
+                    <field name="living_area" filter_domain="[('living_area', '>=', self)]" />
+
+                    <filter name="available" string="Available" domain="[('state', 'in', ['new', 'offer received'])]" />
+                    <filter name="sold" string="Sold" domain="[('state', '=', 'sold')]" />
+
+                    <separator />
+
+                    <filter name="group_by_state" string="Status" context="{'group_by': 'state'}" />
+                </search>
+            </field>
+        </record>
+
+        <record id="estate.property_kanban_view" model="ir.ui.view">
+            <field name="name">estate.property.view.kanban</field>
+            <field name="model">estate.property</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="prop_type">
+                    <templates>
+                        <t t-name="card">
+                            <div>
+                                <h2><field name="name"/></h2>
+                                <field name="state" widget="statusbar"/>
+                                <h4>Expected Price: <br/> <field name="expected_price"/></h4>
+                                <h4 invisible="not estate_offers">Best Price So Far:  <br/> <field name="best_price"/></h4>
+                                <h4 invisible="state != 'accepted'">Selling For:  <br/> <field name="selling_price"/></h4>
+                                <field name="tags_ids" widget="many2many_tags"/>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+    </data>
+</odoo>
