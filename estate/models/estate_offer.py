@@ -1,5 +1,6 @@
 from datetime import date, timedelta
 from odoo import api, fields, models
+from odoo.orm.types import ValuesType
 from odoo.tools.float_utils import float_compare
 from odoo.exceptions import ValidationError
 
@@ -31,10 +32,29 @@ class EstateOffer(models.Model):
         "Offer price must be above 0"
     )
 
-    @api.constrains("state")
-    def _constraint_acception(self):
-        if self.state == 'accepted' and float_compare(self.price, self.estate_id['expected_price'] * .9, 2) == -1:
-            raise ValidationError("The offer of a price cannot be lower than 90% of the expected price")
+    @api.model
+    def create(self, vals_list): # type: ignore
+        for record in vals_list:
+            _property_id = record['estate_id']
+            cached_property = self.env['estate.property'].browse(_property_id)
+            _price = record['price']
+
+            _all_prices = cached_property['estate_offers'].mapped('price')
+            _max_offer = -1
+            if _all_prices:
+                _max_offer = max(_all_prices)
+        
+            # 1. Check price
+            if float_compare(_price, cached_property['expected_price'] * .9, 2) == -1:
+                raise ValidationError("The offer of a price cannot be lower than 90% of the expected price")
+            if float_compare( _price,  _max_offer, 2) == -1:
+                raise ValidationError("Your price of [%s] is not higher than the max [%s]" % (record['price'], _max_offer))
+
+            # 2. Update estate state through browsing cache
+            _prop_state = cached_property['state']
+            if _prop_state == 'new':
+                cached_property['state'] = 'offer received'
+        return super().create(vals_list)
         
     # @api.onchange("")
 

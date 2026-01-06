@@ -7,8 +7,8 @@ class EstateProperty(models.Model):
     _description = "A property that you can probably not afford."
     _order = "id desc"
 
-    prop_type = fields.Many2one("estate.property.realtype")
-    tags_ids = fields.Many2many("estate.property.type")
+    prop_type = fields.Many2one("estate.property.type")
+    tags_ids = fields.Many2many("estate.property.tag")
 
     # Buyer stored as a partner reference
     salesman_id = fields.Many2one("res.users", string="Salesman", default=lambda self: self.env.user)
@@ -21,7 +21,8 @@ class EstateProperty(models.Model):
             ('accepted', 'Accepted'),
             ('sold', 'Sold'),
             ('cancelled', 'Cancelled'),
-        ]
+        ], # type: ignore
+        default='new'
     )
 
     name = fields.Char('Name', required=True, translate=True)
@@ -46,7 +47,7 @@ class EstateProperty(models.Model):
             ('south', 'South'),
             ('east', 'East'),
             ('west', 'West')
-        ],
+        ], # type: ignore
         string='Garden Orientation'
     )
 
@@ -66,6 +67,12 @@ class EstateProperty(models.Model):
         'unique(name)',
         "Name must be unique."
     )
+
+    @api.ondelete(at_uninstall=False)
+    def _on_delete_check(self):
+        for record in self:
+            if not record['state'] in ('new', 'cancelled'):
+                raise UserError("Cannot delete %s properties, not New or Cancelled" % record['state'])
 
     def SoldFunction(self):
         self.env.user
@@ -96,18 +103,6 @@ class EstateProperty(models.Model):
     def _compute_total_area(self):
         for record in self:
             record.total_area = record.living_area + record.garden_area
-
-    @api.onchange("estate_offers")
-    def _compute_state(self):
-        if len(self.estate_offers) < 1:
-            self.state = 'new'
-            return;
-        for o_st in self.estate_offers.mapped('state'):
-            if o_st == 'refused':
-                self.state = 'offer received'
-            if o_st == 'accepted':
-                self.state = 'accepted'
-                break
 
     @api.onchange("garden")
     def _set_garden_related_info(self):
