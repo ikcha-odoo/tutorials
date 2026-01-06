@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="estate.property_view_kanban" model="ir.ui.view">
+            <field name="name">estate.property.view.kanban</field>
+            <field name="model">estate.property</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="prop_type">
+                    <templates>
+                        <t t-name="card">
+                            <div>
+                                <h2><field name="name"/></h2>
+                                <field name="state" widget="statusbar"/>
+                                <h4>Expected Price: <br/> <field name="expected_price"/></h4>
+                                <h4 invisible="not estate_offers">Best Price So Far:  <br/> <field name="best_price"/></h4>
+                                <h4 invisible="state != 'accepted'">Selling For:  <br/> <field name="selling_price"/></h4>
+                                <field name="tags_ids" widget="many2many_tags"/>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+    </data>
+</odoo>
