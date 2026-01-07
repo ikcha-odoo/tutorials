@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
     <data noupdate="1">
-
-
-
         <record id="estate_offer_action" model="ir.actions.act_window">
             <field name="name">Offers</field>
             <field name="res_model">estate.offer</field>
             <field name="view_mode">list,form</field>
-            <!-- <field name="search_view_id" ref="" -->
         </record>
 
         <record id="estate_offer_action_from_realtype" model="ir.actions.act_window">
@@ -17,8 +12,6 @@
             <field name="res_model">estate.offer</field>
             <field name="view_mode">list,form</field>
             <field name="domain">[('estate_type_ids', '=', active_id)]</field>
-            <!-- <field name="context">{'default_estate_type_ids': active_id}</field> -->
-            <!-- <field name="search_view_id" ref="" -->
         </record>
 
     </data>

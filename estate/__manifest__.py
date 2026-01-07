@@ -7,11 +7,17 @@
     'author': 'Your Name',
     'depends': ['base'],
     'data': [
-        # Add your data files here (views, security, etc)
         'security/ir.model.access.csv',
-        'views/estate.view-properties.xml',
+        'views/estate_menuitems.xml',
+        'views/estate_type_action.xml',
+        'views/estate_type_views.xml',
+        'views/estate_tag_action.xml',
+        'views/estate_tag_views.xml',
+        'views/estate_property_action.xml',
+        'views/estate_property_views.xml',
+        'views/estate_offer_action.xml',
+        'views/estate_offer_views.xml',
         'views/res_users_views.xml',
-        'views/kanban.xml'
     ],
     'installable': True,
     'application': True,

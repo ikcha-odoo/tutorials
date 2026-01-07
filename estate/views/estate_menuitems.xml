@@ -1,0 +1,8 @@
+<odoo>
+    <data>
+        <menuitem id="estate_menu" name="Estate">
+            <menuitem id="menu_main" name="Items"/>
+            <menuitem id="menu_settings" name="Settings"/>
+        </menuitem>
+    </data>
+</odoo>
